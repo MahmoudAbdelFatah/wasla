@@ -28,27 +28,19 @@ public class ContactsActivity extends AppCompatActivity {
     private InstructorAdapter instructorAdapter;
     private List<Instructor> instructors;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
-
-
-
-
         instructors = new ArrayList<>();
         recyclerView = findViewById(R.id.rv_instructor);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,numberOfColumns()));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
         instructorAdapter = new InstructorAdapter(this , instructors);
         recyclerView.setAdapter(instructorAdapter);
-/*
-//test set available contacts
+
+        //test set available contacts
         OnlineDataBase onlineDataBase=new OnlineDataBase();
-        List<Instructor>l =new ArrayList<>();
         Instructor i1=new Instructor();
         i1.setEmail("amr@yahoo");
         i1.setName("amr");
@@ -57,26 +49,17 @@ public class ContactsActivity extends AppCompatActivity {
         i2.setEmail("mohamed@yahoo");
         i2.setName("mohamed");
 
-        l.add(i1);
-        l.add(i2);
-        onlineDataBase.setAvailableContacts(l);
-*/
+        instructors.add(i1);
+        instructors.add(i2);
+        instructorAdapter.notifyDataSetChanged();
+        //onlineDataBase.setAvailableContacts(l);
+
         /*
         //test get available contacts async
         OnlineDataBase onlineDataBase=new OnlineDataBase();
         onlineDataBase.getAvailableContacts();
         */
 
-    }
-
-    private int numberOfColumns() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int widthDivider = 400;
-        int width = displayMetrics.widthPixels;
-        int nColumns = width / widthDivider;
-        if (nColumns < 2) return 2  ;
-        return nColumns;
     }
 
 }
