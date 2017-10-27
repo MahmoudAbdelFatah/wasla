@@ -5,28 +5,69 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.wasla.R;
 import com.example.wasla.adapter.InstructorAdapter;
 import com.example.wasla.model.Instructor;
-
+import com.example.wasla.model.OnlineDataBase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ContactsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private InstructorAdapter instructorAdapter;
     private List<Instructor> instructors;
+    private FirebaseDatabase firebaseDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
         instructors = new ArrayList<>();
         recyclerView = findViewById(R.id.rv_instructor);
         recyclerView.setLayoutManager(new GridLayoutManager(this,numberOfColumns()));
         instructorAdapter = new InstructorAdapter(this , instructors);
         recyclerView.setAdapter(instructorAdapter);
+/*
+//test set available contacts
+        OnlineDataBase onlineDataBase=new OnlineDataBase();
+        List<Instructor>l =new ArrayList<>();
+        Instructor i1=new Instructor();
+        i1.setEmail("amr@yahoo");
+        i1.setName("amr");
+
+        Instructor i2=new Instructor();
+        i2.setEmail("mohamed@yahoo");
+        i2.setName("mohamed");
+
+        l.add(i1);
+        l.add(i2);
+        onlineDataBase.setAvailableContacts(l);
+*/
+        /*
+        //test get available contacts async
+        OnlineDataBase onlineDataBase=new OnlineDataBase();
+        onlineDataBase.getAvailableContacts();
+        */
+
     }
 
     private int numberOfColumns() {

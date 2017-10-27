@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class Instructor implements Serializable {
     private String name, email;
 
+    public  Instructor(){}; //nedded for firebase object
     public String getEmail() {
         return email;
     }
