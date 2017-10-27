@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.wasla.R;
@@ -26,21 +27,19 @@ public class ContactsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private InstructorAdapter instructorAdapter;
     private List<Instructor> instructors;
-    private FirebaseDatabase firebaseDatabase;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+
+
         instructors = new ArrayList<>();
         recyclerView = findViewById(R.id.rv_instructor);
         recyclerView.setLayoutManager(new GridLayoutManager(this,numberOfColumns()));
@@ -79,4 +78,5 @@ public class ContactsActivity extends AppCompatActivity {
         if (nColumns < 2) return 2  ;
         return nColumns;
     }
+
 }
