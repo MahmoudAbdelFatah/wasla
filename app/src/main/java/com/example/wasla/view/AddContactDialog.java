@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.wasla.R;
 
@@ -23,6 +24,11 @@ public class AddContactDialog extends Activity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(nameEditText.getText().toString().isEmpty()||emailEditText.getText().toString().isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(),"Add name and email of the instractor,please.",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Intent returnIntent=new Intent();
                 returnIntent.putExtra("name",nameEditText.getText().toString());
                 returnIntent.putExtra("email",emailEditText.getText().toString());

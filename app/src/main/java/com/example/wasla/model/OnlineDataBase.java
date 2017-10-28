@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.wasla.adapter.InstructorAdapter;
 import com.example.wasla.view.ContactsActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -24,27 +25,32 @@ import java.util.List;
 public class OnlineDataBase {
     public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     public static DatabaseReference databaseReference = firebaseDatabase.getReference();
-    public List<Instructor> availableContacts;
-    public List<Instructor> pendingContacts;
+  //  public List<Instructor> availableContacts;
+   // public List<Instructor> pendingContacts;
 
     public OnlineDataBase()
     {
-        availableContacts=new ArrayList<>() ;
-        pendingContacts=new ArrayList<>() ;
+     //   availableContacts=new ArrayList<>() ;
+     //   pendingContacts=new ArrayList<>() ;
     }
     public void setAvailableContacts(List<Instructor> l)
     {
-    availableContacts=l;
+  //  availableContacts=l;
     databaseReference.child("availableContacts").setValue(l);
     }
-    public void getAvailableContacts()
+    public void updateAvailableContacts( final List<Instructor>instructors, final InstructorAdapter instructorAdapter)
     {
-        databaseReference.child("availableContacts").addListenerForSingleValueEvent(new ValueEventListener() {
+      databaseReference.child("availableContacts").addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<List<Instructor>> type=new GenericTypeIndicator<List<Instructor>>(){};
-                availableContacts=dataSnapshot.getValue(type);
+        //        availableContacts=dataSnapshot.getValue(type);
 
+                instructors.clear();
+                instructors.addAll(dataSnapshot.getValue(type));
+
+                instructorAdapter.notifyDataSetChanged();
                // Log.d("test",availableContacts.get(1).getName()); //for testing
             }
 
@@ -58,7 +64,7 @@ public class OnlineDataBase {
 
     public void setPendingContacts(List<Instructor> l)
     {
-        pendingContacts=l;
+      //  pendingContacts=l;
         databaseReference.child("pendingContacts").setValue(l);
     }
     public void getPendingContacts()
@@ -66,7 +72,7 @@ public class OnlineDataBase {
         databaseReference.child("pendingContacts").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                pendingContacts=dataSnapshot.getValue(List.class);
+        //        pendingContacts=dataSnapshot.getValue(List.class);
             }
 
             @Override
@@ -147,6 +153,24 @@ public class OnlineDataBase {
     {
         databaseReference.child("pendingContacts").removeEventListener(childEventListenerPendingContacts);
     }
-
-
+/*
+// will break the consistency of the database ... update the hole list instead
+    public void deleteAvailableContact(int index)
+    {
+        databaseReference.child("availableContacts").child(String.valueOf(index)).setValue(null);
+    }*/
+    public void addAvailableContact(int index,Object value)
+    {
+        databaseReference.child("availableContacts").child(String.valueOf(index)).setValue(value);
+    }
+    /*
+// will break the consistency of the database ... update the hole list instead
+    public void deletePendingContact(int index)
+    {
+        databaseReference.child("pendingContacts").child(String.valueOf(index)).setValue(null);
+    }*/
+    public void addPendingContact(int index,Object value)
+    {
+        databaseReference.child("pendingContacts").child(String.valueOf(index)).setValue(value);
+    }
 }
