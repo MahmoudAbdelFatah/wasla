@@ -15,29 +15,25 @@ import com.example.wasla.model.OnlineDataBase;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-import java.util.ArrayList;
-import java.util.List;
 public class ContactsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private InstructorAdapter instructorAdapter;
-    private List<Instructor> instructors;
+   // private List<Instructor> instructors;
     private final int AddContactDialogRequestCoder=1;
     private OnlineDataBase onlineDataBase;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == AddContactDialogRequestCoder) {
             if(resultCode == RESULT_OK){
                 String name=  data.getStringExtra("name");
                 String email=  data.getStringExtra("email");
-              //  Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
-             //   Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
                 Instructor instructor=new Instructor();
                 instructor.setName(name);
                 instructor.setEmail(email);
-                instructors.add(instructor);
-                onlineDataBase.setAvailableContacts(instructors);
-                //TODO: Amr add/remove only a specific record to the database
+                onlineDataBase.addAvailableContact(onlineDataBase.availableContacts.size(),instructor);
+                onlineDataBase.availableContacts.add(instructor);
                 instructorAdapter.notifyDataSetChanged();
                 Toast.makeText(this, "Successfully add the contact", Toast.LENGTH_SHORT).show();
             }
@@ -61,12 +57,14 @@ public class ContactsActivity extends AppCompatActivity {
 
         onlineDataBase=new OnlineDataBase();
 
-        instructors = new ArrayList<>();
+        //instructors = new ArrayList<>();
         recyclerView = findViewById(R.id.rv_instructor);
         recyclerView.setLayoutManager(new GridLayoutManager(this,1));
-        instructorAdapter = new InstructorAdapter(this , instructors);
+        instructorAdapter = new InstructorAdapter(this , onlineDataBase.availableContacts);
         recyclerView.setAdapter(instructorAdapter);
-        instructorAdapter.notifyDataSetChanged();
+
+        onlineDataBase.updateAvailableContacts(instructorAdapter);
+
     }
 
 }
