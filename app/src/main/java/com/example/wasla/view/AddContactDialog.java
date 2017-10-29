@@ -12,21 +12,24 @@ import android.widget.Toast;
 import com.example.wasla.R;
 
 public class AddContactDialog extends Activity {
+    private EditText nameEditText;
+    private EditText emailEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact_dialog);
-        final EditText nameEditText=(EditText)findViewById(R.id.name);
-        final EditText emailEditText=(EditText)findViewById(R.id.email);
+
+        nameEditText=(EditText)findViewById(R.id.name);
+        emailEditText=(EditText)findViewById(R.id.email);
         final Button addButton=(Button)findViewById(R.id.addContactButton);
         final Button cancelButton=(Button)findViewById(R.id.cancelContactButton);
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(nameEditText.getText().toString().isEmpty()||emailEditText.getText().toString().isEmpty())
+                if(!isValid())
                 {
-                    Toast.makeText(getApplicationContext(),"Add name and email of the instractor,please.",Toast.LENGTH_LONG).show();
                     return;
                 }
                 Intent returnIntent=new Intent();
@@ -44,5 +47,21 @@ public class AddContactDialog extends Activity {
                 finish();
             }
         });
+    }
+
+    public boolean isValid(){
+        boolean flag = true;
+        String name = nameEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+
+        if(name.toString().trim().length() == 0) {
+            nameEditText.setError("ENTER THE Name");
+            flag=false;
+        }
+        if (email.toString().trim().length() == 0) {
+            emailEditText.setError("ENTER THE Email");
+            flag=false;
+        }
+        return flag;
     }
 }

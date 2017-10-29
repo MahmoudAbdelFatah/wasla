@@ -23,24 +23,26 @@ public class ContactsActivity extends AppCompatActivity {
     private List<Instructor> instructors;
     private final int AddContactDialogRequestCoder=1;
     private OnlineDataBase onlineDataBase;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == AddContactDialogRequestCoder) {
             if(resultCode == RESULT_OK){
                 String name=  data.getStringExtra("name");
                 String email=  data.getStringExtra("email");
+              //  Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
                 Instructor instructor=new Instructor();
                 instructor.setName(name);
                 instructor.setEmail(email);
-                onlineDataBase.addAvailableContact(instructors.size(),instructor);
                 instructors.add(instructor);
+                onlineDataBase.setAvailableContacts(instructors);
+                //TODO: Amr add/remove only a specific record to the database
                 instructorAdapter.notifyDataSetChanged();
                 Toast.makeText(this, "Successfully add the contact", Toast.LENGTH_SHORT).show();
             }
         }
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,31 +66,7 @@ public class ContactsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this,1));
         instructorAdapter = new InstructorAdapter(this , instructors);
         recyclerView.setAdapter(instructorAdapter);
-
-        onlineDataBase.updateAvailableContacts(instructors,instructorAdapter);
-        //test set available contacts
-
-     /*   Instructor i1=new Instructor();
-        i1.setEmail("amr@yahoo");
-        i1.setName("amr");
-
-        Instructor i2=new Instructor();
-        i2.setEmail("mohamed@yahoo");
-        i2.setName("mohamed");
-
-        instructors.add(i1);
-        instructors.add(i2);
-        instructorAdapter.notifyDataSetChanged();*/
-
-        //onlineDataBase.setAvailableContacts(l);
-
-        /*
-        //test get available contacts async
-        OnlineDataBase onlineDataBase=new OnlineDataBase();
-        onlineDataBase.getAvailableContacts();
-        */
-
+        instructorAdapter.notifyDataSetChanged();
     }
-
 
 }

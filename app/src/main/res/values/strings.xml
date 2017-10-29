@@ -3,4 +3,5 @@
 
     <string name="instructor_photo">photo of the constructor</string>
     <string name="share_image">share the email on facebook</string>
+    <string name="prompt_email">Email</string>
 </resources>

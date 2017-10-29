@@ -87,11 +87,11 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
 
         public ViewHolder(View itemView) {
             super(itemView);
+            cardView = itemView.findViewById(R.id.cv_instructor_content);
             instructorPhoto=itemView.findViewById(R.id.iv_instructor_photo);
             imageShare = itemView.findViewById(R.id.iv_share);
             instructorName =  itemView.findViewById(R.id.tv_instructor_name);
             instructorEmail =  itemView.findViewById(R.id.tv_instructor_email);
-            cardView = itemView.findViewById(R.id.cv_instructor_content);
         }
     }
 }
