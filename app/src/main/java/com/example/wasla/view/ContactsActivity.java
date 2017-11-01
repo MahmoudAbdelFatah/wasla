@@ -18,21 +18,21 @@ import com.github.clans.fab.FloatingActionMenu;
 public class ContactsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private InstructorAdapter instructorAdapter;
-   // private List<Instructor> instructors;
-    private final int AddContactDialogRequestCoder=1;
+    // private List<Instructor> instructors;
+    private final int AddContactDialogRequestCoder = 1;
     private OnlineDataBase onlineDataBase;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == AddContactDialogRequestCoder) {
-            if(resultCode == RESULT_OK){
-                String name=  data.getStringExtra("name");
-                String email=  data.getStringExtra("email");
-                Instructor instructor=new Instructor();
+            if (resultCode == RESULT_OK) {
+                String name = data.getStringExtra("name");
+                String email = data.getStringExtra("email");
+                Instructor instructor = new Instructor();
                 instructor.setName(name);
                 instructor.setEmail(email);
-                onlineDataBase.addAvailableContact(onlineDataBase.availableContacts.size(),instructor);
+                onlineDataBase.addAvailableContact(onlineDataBase.availableContacts.size(), instructor);
                 onlineDataBase.availableContacts.add(instructor);
                 instructorAdapter.notifyDataSetChanged();
                 Toast.makeText(this, "Successfully add the contact", Toast.LENGTH_SHORT).show();
@@ -44,23 +44,23 @@ public class ContactsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
-        final FloatingActionMenu floatingActionMenu =(FloatingActionMenu)findViewById(R.id.fab);
-        final FloatingActionButton floatingActionButton= (FloatingActionButton)findViewById(R.id.addContact_item);
+        final FloatingActionMenu floatingActionMenu = (FloatingActionMenu) findViewById(R.id.fab);
+        final FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.addContact_item);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 floatingActionMenu.close(true);
-                Intent intent=new Intent(getApplicationContext(),AddContactDialog.class);
-                startActivityForResult(intent,AddContactDialogRequestCoder);
+                Intent intent = new Intent(getApplicationContext(), AddContactDialog.class);
+                startActivityForResult(intent, AddContactDialogRequestCoder);
             }
         });
 
-        onlineDataBase=new OnlineDataBase();
+        onlineDataBase = new OnlineDataBase();
 
         //instructors = new ArrayList<>();
         recyclerView = findViewById(R.id.rv_instructor);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
-        instructorAdapter = new InstructorAdapter(this , onlineDataBase.availableContacts);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        instructorAdapter = new InstructorAdapter(this, onlineDataBase.availableContacts);
         recyclerView.setAdapter(instructorAdapter);
 
         onlineDataBase.updateAvailableContacts(instructorAdapter);

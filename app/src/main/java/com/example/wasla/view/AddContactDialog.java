@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import com.example.wasla.R;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class AddContactDialog extends Activity {
     private EditText nameEditText;
     private EditText emailEditText;
@@ -20,21 +23,26 @@ public class AddContactDialog extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact_dialog);
 
-        nameEditText=(EditText)findViewById(R.id.name);
-        emailEditText=(EditText)findViewById(R.id.email);
-        final Button addButton=(Button)findViewById(R.id.addContactButton);
-        final Button cancelButton=(Button)findViewById(R.id.cancelContactButton);
+        nameEditText = (EditText) findViewById(R.id.name);
+        emailEditText = (EditText) findViewById(R.id.email);
+        final Button addButton = (Button) findViewById(R.id.addContactButton);
+        final Button cancelButton = (Button) findViewById(R.id.cancelContactButton);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isValid())
-                {
+                if (!isValid()) {
                     return;
                 }
-                Intent returnIntent=new Intent();
-                returnIntent.putExtra("name",nameEditText.getText().toString());
-                returnIntent.putExtra("email",emailEditText.getText().toString());
+                String email = emailEditText.getText().toString();
+                if(!isValidEmail(email)) {
+                    emailEditText.setError("not valid email");
+                    return;
+                }
+
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("name", nameEditText.getText().toString());
+                returnIntent.putExtra("email", emailEditText.getText().toString());
 
                 setResult(RESULT_OK, returnIntent);
                 finish();
@@ -49,19 +57,28 @@ public class AddContactDialog extends Activity {
         });
     }
 
-    public boolean isValid(){
+    public boolean isValid() {
         boolean flag = true;
         String name = nameEditText.getText().toString();
         String email = emailEditText.getText().toString();
 
-        if(name.toString().trim().length() == 0) {
+        if (name.toString().trim().length() == 0) {
             nameEditText.setError("ENTER THE Name");
-            flag=false;
+            flag = false;
         }
         if (email.toString().trim().length() == 0) {
             emailEditText.setError("ENTER THE Email");
-            flag=false;
+            flag = false;
         }
         return flag;
+    }
+
+    private boolean isValidEmail(String email) {
+        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 }

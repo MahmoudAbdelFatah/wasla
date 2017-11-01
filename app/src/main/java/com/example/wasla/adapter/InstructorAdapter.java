@@ -1,6 +1,7 @@
 package com.example.wasla.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wasla.R;
 import com.example.wasla.model.Instructor;
@@ -23,7 +25,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
     private List<Instructor> instructors;
     private Context context;
 
-    public InstructorAdapter(Context context, List<Instructor> instructors){
+    public InstructorAdapter(Context context, List<Instructor> instructors) {
         this.context = context;
         this.instructors = instructors;
     }
@@ -44,7 +46,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         // Get the data model based on position
-        final Instructor instructor =  instructors.get(position);
+        final Instructor instructor = instructors.get(position);
 
         viewHolder.instructorName.setText(instructor.getName());
         viewHolder.instructorEmail.setText(instructor.getEmail());
@@ -53,21 +55,33 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
         viewHolder.imageShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: implementing the share here!
+                //TODO: implementing the share here! not tested yet
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, instructor.getName() + "\n" + instructor.getEmail());
+                if (shareIntent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(shareIntent);
+                }
             }
         });
 
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: implementing send email here!
+                //TODO: implementing send email here! not tested yet
+                Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                emailIntent.setType("plain/text");
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{instructor.getEmail()});
+                if (emailIntent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(Intent.createChooser(emailIntent, "Send mail!"));
+                }
             }
         });
 
         viewHolder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                //TODO: implementing checked email here!
+                //TODO: amr implementing checked email here!
                 return false;
             }
         });
@@ -88,10 +102,10 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cv_instructor_content);
-            instructorPhoto=itemView.findViewById(R.id.iv_instructor_photo);
+            instructorPhoto = itemView.findViewById(R.id.iv_instructor_photo);
             imageShare = itemView.findViewById(R.id.iv_share);
-            instructorName =  itemView.findViewById(R.id.tv_instructor_name);
-            instructorEmail =  itemView.findViewById(R.id.tv_instructor_email);
+            instructorName = itemView.findViewById(R.id.tv_instructor_name);
+            instructorEmail = itemView.findViewById(R.id.tv_instructor_email);
         }
     }
 }
