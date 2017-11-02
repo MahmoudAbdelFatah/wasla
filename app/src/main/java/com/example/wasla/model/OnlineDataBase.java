@@ -3,7 +3,6 @@ package com.example.wasla.model;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.wasla.adapter.InstructorAdapter;
 import com.example.wasla.view.ContactsActivity;
