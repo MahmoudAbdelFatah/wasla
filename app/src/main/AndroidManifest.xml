@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.AddContactDialog"
-            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar.MinWidth"></activity>
+            android:theme="@android:style/Theme.Holo.Light.Dialog.MinWidth" android:label="Add new contact"></activity>
     </application>
 
 </manifest>

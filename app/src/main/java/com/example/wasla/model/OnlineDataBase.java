@@ -49,13 +49,17 @@ public class OnlineDataBase {
                 GenericTypeIndicator<List<Instructor>> type = new GenericTypeIndicator<List<Instructor>>() {
                 };
                 //    availableContacts= dataSnapshot.getValue(type);
-                availableContacts.clear();
-                availableContacts.addAll(dataSnapshot.getValue(type));
-                //  instructors.clear();
-                // instructors.addAll(dataSnapshot.getValue(type));
+                List<Instructor> temp=dataSnapshot.getValue(type);
+                if(temp!=null) {
+                    availableContacts.clear();
 
-                instructorAdapter.notifyDataSetChanged();
-                // Log.d("test",availableContacts.get(1).getName()); //for testing
+                    availableContacts.addAll(temp);
+                    //  instructors.clear();
+                    // instructors.addAll(dataSnapshot.getValue(type));
+
+                    instructorAdapter.notifyDataSetChanged();
+                    // Log.d("test",availableContacts.get(1).getName()); //for testing
+                }
             }
 
             @Override
@@ -82,14 +86,16 @@ public class OnlineDataBase {
                 GenericTypeIndicator<List<Instructor>> type = new GenericTypeIndicator<List<Instructor>>() {
                 };
                 //    pendingContacts=dataSnapshot.getValue(type);
+                List<Instructor> temp=dataSnapshot.getValue(type);
+                if(temp!=null) {
+                    pendingContacts.clear();
+                    pendingContacts.addAll(temp);
+                    //  instructors.clear();
+                    // instructors.addAll(dataSnapshot.getValue(type));
 
-                pendingContacts.clear();
-                pendingContacts.addAll(dataSnapshot.getValue(type));
-                //  instructors.clear();
-                // instructors.addAll(dataSnapshot.getValue(type));
-
-                instructorAdapter.notifyDataSetChanged();
-                // Log.d("test",availableContacts.get(1).getName()); //for testing
+                    instructorAdapter.notifyDataSetChanged();
+                    // Log.d("test",availableContacts.get(1).getName()); //for testing
+                }
             }
 
             @Override
