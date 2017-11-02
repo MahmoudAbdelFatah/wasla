@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wasla.R;
 import com.example.wasla.model.Instructor;
@@ -55,7 +54,6 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
         viewHolder.imageShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: implementing the share here! not tested yet
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_TEXT, instructor.getName() + "\n" + instructor.getEmail());
@@ -68,7 +66,6 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: implementing send email here! not tested yet
                 Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                 emailIntent.setType("plain/text");
                 emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{instructor.getEmail()});

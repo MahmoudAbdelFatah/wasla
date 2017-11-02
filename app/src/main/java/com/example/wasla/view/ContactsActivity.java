@@ -1,6 +1,8 @@
 package com.example.wasla.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,10 +17,11 @@ import com.example.wasla.model.OnlineDataBase;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import es.dmoral.toasty.Toasty;
+
 public class ContactsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private InstructorAdapter instructorAdapter;
-    // private List<Instructor> instructors;
     private final int AddContactDialogRequestCoder = 1;
     private OnlineDataBase onlineDataBase;
 
@@ -35,7 +38,7 @@ public class ContactsActivity extends AppCompatActivity {
                 onlineDataBase.addAvailableContact(onlineDataBase.availableContacts.size(), instructor);
                 onlineDataBase.availableContacts.add(instructor);
                 instructorAdapter.notifyDataSetChanged();
-                Toast.makeText(this, "Successfully add the contact", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Successfully add the contact!", Toast.LENGTH_SHORT, true).show();
             }
         }
     }
@@ -54,10 +57,10 @@ public class ContactsActivity extends AppCompatActivity {
                 startActivityForResult(intent, AddContactDialogRequestCoder);
             }
         });
-
+        if(!isNetworkConnected()) {
+            Toasty.warning(this, "check the internet connection!", Toast.LENGTH_LONG, true).show();
+        }
         onlineDataBase = new OnlineDataBase();
-
-        //instructors = new ArrayList<>();
         recyclerView = findViewById(R.id.rv_instructor);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         instructorAdapter = new InstructorAdapter(this, onlineDataBase.availableContacts);
@@ -65,6 +68,11 @@ public class ContactsActivity extends AppCompatActivity {
 
         onlineDataBase.updateAvailableContacts(instructorAdapter);
 
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 
 }
