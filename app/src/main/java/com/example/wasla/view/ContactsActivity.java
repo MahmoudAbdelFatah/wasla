@@ -5,7 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.example.wasla.R;
@@ -29,9 +34,12 @@ public class ContactsActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String name = data.getStringExtra("name");
                 String email = data.getStringExtra("email");
+                String gender= data.getStringExtra("gender");
                 Instructor instructor = new Instructor();
                 instructor.setName(name);
                 instructor.setEmail(email);
+                instructor.setGender(gender);
+
                 onlineDataBase.addAvailableContact(onlineDataBase.availableContacts.size(), instructor);
                 onlineDataBase.availableContacts.add(instructor);
                 instructorAdapter.notifyDataSetChanged();
@@ -62,9 +70,34 @@ public class ContactsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         instructorAdapter = new InstructorAdapter(this, onlineDataBase.availableContacts);
         recyclerView.setAdapter(instructorAdapter);
+        registerForContextMenu(recyclerView);
 
         onlineDataBase.updateAvailableContacts(instructorAdapter);
 
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId()==R.id.rv_instructor) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.context_list, menu);
+
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        switch(item.getItemId()) {
+            case R.id.edit:
+                // edit stuff here
+                int x=instructorAdapter.getLastLongPress();
+                onlineDataBase.deleteAvailableContact(instructorAdapter.getLastLongPress());
+                instructorAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
 }

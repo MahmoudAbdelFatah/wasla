@@ -34,10 +34,10 @@ public class OnlineDataBase {
         Log.d("test", "entered constractor");
     }
 
-    public void setAvailableContacts(List<Instructor> l) {
+    public void setAvailableContacts() {
         //availableContacts=l;
-        availableContacts.clear();
-        availableContacts.addAll(l);
+       // availableContacts.clear();
+      //  availableContacts.addAll(l);
         databaseReference.child("availableContacts").setValue(availableContacts);
     }
 
@@ -70,10 +70,10 @@ public class OnlineDataBase {
     }
 
 
-    public void setPendingContacts(List<Instructor> l) {
+    public void setPendingContacts() {
         //  pendingContacts=l;
-        pendingContacts.clear();
-        pendingContacts.addAll(l);
+       // pendingContacts.clear();
+       // pendingContacts.addAll(l);
         databaseReference.child("pendingContacts").setValue(pendingContacts);
     }
 
@@ -176,22 +176,26 @@ public class OnlineDataBase {
         databaseReference.child("pendingContacts").removeEventListener(childEventListenerPendingContacts);
     }
 
-    /*
-    // will break the consistency of the database ... update the hole list instead
+
+
         public void deleteAvailableContact(int index)
         {
-            databaseReference.child("availableContacts").child(String.valueOf(index)).setValue(null);
-        }*/
+            availableContacts.remove(index);
+            setAvailableContacts();
+          //  databaseReference.child("availableContacts").child(String.valueOf(index)).setValue(null);
+        }
     public void addAvailableContact(int index, Object value) {
         databaseReference.child("availableContacts").child(String.valueOf(index)).setValue(value);
     }
 
-    /*
-// will break the consistency of the database ... update the hole list instead
+
+
     public void deletePendingContact(int index)
     {
-        databaseReference.child("pendingContacts").child(String.valueOf(index)).setValue(null);
-    }*/
+        pendingContacts.remove(index);
+        setPendingContacts();
+       // databaseReference.child("pendingContacts").child(String.valueOf(index)).setValue(null);
+    }
     public void addPendingContact(int index, Object value) {
         databaseReference.child("pendingContacts").child(String.valueOf(index)).setValue(value);
     }

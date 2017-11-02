@@ -6,6 +6,16 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/textView3"
+        android:layout_width="45dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="Gender"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,13 +72,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="Add"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/space"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_gender" />
 
     <Space
         android:id="@+id/space"
@@ -85,16 +98,30 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginBottom="8dp"
-
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toEndOf="@+id/space"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_gender" />
+
+    <Spinner
+        android:id="@+id/spinner_gender"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="1.0" />
+        android:entries="@array/genders"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="16dp" />
 
 </android.support.constraint.ConstraintLayout>

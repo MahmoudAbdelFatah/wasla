@@ -4,4 +4,9 @@
     <string name="instructor_photo">photo of the constructor</string>
     <string name="share_image">share the email on facebook</string>
     <string name="prompt_email">Email</string>
+    <string name="menu_delete">Delete</string>
+    <string-array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>

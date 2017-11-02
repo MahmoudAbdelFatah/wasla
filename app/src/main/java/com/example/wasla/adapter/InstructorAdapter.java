@@ -25,6 +25,11 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
     private List<Instructor> instructors;
     private Context context;
 
+    public int getLastLongPress() {
+        return lastLongPress;
+    }
+
+    private int lastLongPress;
     public InstructorAdapter(Context context, List<Instructor> instructors) {
         this.context = context;
         this.instructors = instructors;
@@ -44,12 +49,16 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get the data model based on position
         final Instructor instructor = instructors.get(position);
 
         viewHolder.instructorName.setText(instructor.getName());
         viewHolder.instructorEmail.setText(instructor.getEmail());
+        if(instructor.getGender().equals("male"))
+        viewHolder.instructorPhoto.setImageResource(R.drawable.male);
+        else if(instructor.getGender().equals("female"))
+            viewHolder.instructorPhoto.setImageResource(R.drawable.female);
         Log.v("adapter", instructor.getEmail());
 
         viewHolder.imageShare.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +91,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
             @Override
             public boolean onLongClick(View view) {
                 //TODO: amr implementing checked email here!
+                lastLongPress=position;
                 return false;
             }
         });

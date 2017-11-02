@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.wasla.R;
@@ -27,7 +28,7 @@ public class AddContactDialog extends Activity {
         emailEditText = (EditText) findViewById(R.id.email);
         final Button addButton = (Button) findViewById(R.id.addContactButton);
         final Button cancelButton = (Button) findViewById(R.id.cancelContactButton);
-
+        final Spinner genderSpinner=(Spinner)findViewById(R.id.spinner_gender);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,10 +40,19 @@ public class AddContactDialog extends Activity {
                     emailEditText.setError("not valid email");
                     return;
                 }
-
+                int genderIndex=genderSpinner.getSelectedItemPosition();
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("name", nameEditText.getText().toString());
                 returnIntent.putExtra("email", emailEditText.getText().toString());
+                switch (genderIndex)
+                {
+                    case 0 :
+                        returnIntent.putExtra("gender", "male");
+                        break;
+                    case 1 :
+                        returnIntent.putExtra("gender", "female");
+                        break;
+                }
 
                 setResult(RESULT_OK, returnIntent);
                 finish();
