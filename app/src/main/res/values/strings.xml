@@ -5,6 +5,10 @@
     <string name="share_image">share the email on facebook</string>
     <string name="prompt_email">Email</string>
     <string name="menu_delete">Delete</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="pending_list">Pending List</string>
+    <string name="search">search</string>
+
     <string-array name="genders">
         <item>Male</item>
         <item>Female</item>

@@ -19,8 +19,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.AddContactDialog"
-            android:theme="@android:style/Theme.Holo.Light.Dialog.MinWidth" android:label="Add new contact"></activity>
+        <activity
+            android:name=".view.AddContactDialog"
+            android:label="Add new contact"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.MinWidth" />
+        <activity android:name=".view.PendingContacts" />
+        <activity
+            android:name=".view.AddFeedbackDialog"
+            android:label="Add new Feedback"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.MinWidth" />
+
     </application>
 
 </manifest>
