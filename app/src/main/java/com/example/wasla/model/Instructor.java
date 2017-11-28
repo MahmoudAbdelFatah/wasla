@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Instructor implements Serializable {
     private String name;
     private String email;
-
+    private String gender;
     public String getGender() {
         return gender;
     }
@@ -18,7 +18,7 @@ public class Instructor implements Serializable {
         this.gender = gender;
     }
 
-    private String gender;
+
 
     public  Instructor(){}; //nedded for firebase object
     public String getEmail() {

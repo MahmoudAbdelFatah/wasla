@@ -23,7 +23,7 @@
             android:name=".view.AddContactDialog"
             android:label="Add new contact"
             android:theme="@android:style/Theme.Holo.Light.Dialog.MinWidth" />
-        <activity android:name=".view.PendingContacts" />
+        <activity android:name=".view.PendingContactsActivity" />
         <activity
             android:name=".view.AddFeedbackDialog"
             android:label="Add new Feedback"

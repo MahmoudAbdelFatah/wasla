@@ -40,7 +40,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.rv_instructor_items, parent, false);
+        View contactView = inflater.inflate(R.layout.cv_instructor_item, parent, false);
 
         // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(contactView);
@@ -87,7 +87,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
         viewHolder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                //TODO: amr implementing checked email here!
+
                 lastLongPress=position;
                 return false;
             }

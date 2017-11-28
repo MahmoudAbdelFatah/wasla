@@ -1,6 +1,5 @@
 package com.example.wasla.view;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -10,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
@@ -22,7 +20,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +38,7 @@ public class ContactsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private InstructorAdapter instructorAdapter;
     private final int AddContactDialogRequestCoder = 1;
+    private final int AddFeedbackDialogRequestCoder = 2;
     private OnlineDataBase onlineDataBase;
     private Toolbar toolbar;
     private MenuItem searchAction;
@@ -61,10 +59,36 @@ public class ContactsActivity extends AppCompatActivity {
                 instructor.setEmail(email);
                 instructor.setGender(gender);
 
-                onlineDataBase.addAvailableContact(onlineDataBase.availableContacts.size(), instructor);
-                onlineDataBase.availableContacts.add(instructor);
-                instructorAdapter.notifyDataSetChanged();
-                Toasty.success(this, "Successfully add the contact!", Toast.LENGTH_SHORT, true).show();
+//admin privileges
+          /*   if(onlineDataBase.addAvailableContact(OnlineDataBase.availableContacts.size(), instructor)) {
+                 //   onlineDataBase.availableContacts.add(instructor);
+                 instructorAdapter.notifyDataSetChanged();
+                 Toasty.success(this, "Successfully add the contact!", Toast.LENGTH_SHORT, true).show();
+             }
+             else
+             {
+                 Toasty.error(this, "This email is already in the contacts list!", Toast.LENGTH_SHORT, true).show();
+
+             }
+*/
+            // normal user privileges
+             if(  onlineDataBase.addPendingContact(OnlineDataBase.pendingContacts.size(), instructor)) {
+                 instructorAdapter.notifyDataSetChanged();
+                 Toasty.success(this, "Your request added to the pending list until an admin confirm it,Thanks!", Toast.LENGTH_SHORT, true).show();
+             }
+             else
+             {
+                 Toasty.error(this, "This email is already in the pending list!", Toast.LENGTH_SHORT, true).show();
+
+             }
+            }
+        }
+        else if (requestCode==AddFeedbackDialogRequestCoder)
+        {
+            if (resultCode == RESULT_OK) {
+                String feedback = data.getStringExtra("feedback");
+                onlineDataBase.sendFeedback(feedback);
+                Toasty.success(this, "Successfully send the feedback!", Toast.LENGTH_SHORT, true).show();
             }
         }
     }
@@ -147,11 +171,11 @@ public class ContactsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.pending_list) {
-            startActivity(new Intent(this, PendingContacts.class));
+            startActivity(new Intent(this, PendingContactsActivity.class));
             return true;
         }
         else if(id == R.id.send_feedback) {
-            startActivity(new Intent(this, AddFeedbackDialog.class));
+            startActivityForResult(new Intent(this, AddFeedbackDialog.class),AddFeedbackDialogRequestCoder);
             return true;
         }
         else if(id == R.id.action_search) {

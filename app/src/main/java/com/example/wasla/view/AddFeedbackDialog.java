@@ -21,17 +21,21 @@ public class AddFeedbackDialog extends Activity {
         feedbackET = (EditText) findViewById(R.id.et_feedback);
         final Button addButton = (Button) findViewById(R.id.add_feedback_button);
         final Button cancelButton = (Button) findViewById(R.id.cancel_feedback_button);
-        //TODO>> amr: handle the pending list here!
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("feedback", feedbackET.getText().toString());
+                setResult(RESULT_OK, returnIntent);
+                finish();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                setResult(RESULT_CANCELED, null);
+                finish();
             }
         });
     }

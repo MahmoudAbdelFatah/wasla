@@ -2,13 +2,11 @@ package com.example.wasla.view;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.wasla.R;
 
@@ -24,10 +22,10 @@ public class AddContactDialog extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact_dialog);
 
-        nameEditText = (EditText) findViewById(R.id.name);
-        emailEditText = (EditText) findViewById(R.id.email);
+        nameEditText = (EditText) findViewById(R.id.et_add_contact_name);
+        emailEditText = (EditText) findViewById(R.id.et_add_contact_email);
         final Button addButton = (Button) findViewById(R.id.addContactButton);
-        final Button cancelButton = (Button) findViewById(R.id.cancelContactButton);
+        final Button cancelButton = (Button) findViewById(R.id.cancelAddContactButton);
         final Spinner genderSpinner=(Spinner)findViewById(R.id.spinner_gender);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override

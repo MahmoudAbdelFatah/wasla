@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.wasla.adapter.InstructorAdapter;
+import com.example.wasla.adapter.PendingInstructorAdapter;
 import com.example.wasla.view.ContactsActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -77,7 +78,7 @@ public class OnlineDataBase {
     }
 
 
-    public void updatePendingContacts(final InstructorAdapter instructorAdapter) {
+    public void updatePendingContacts(final PendingInstructorAdapter instructorAdapter) {
         databaseReference.child("pendingContacts").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -183,8 +184,14 @@ public class OnlineDataBase {
             setAvailableContacts();
           //  databaseReference.child("availableContacts").child(String.valueOf(index)).setValue(null);
         }
-    public void addAvailableContact(int index, Object value) {
-        databaseReference.child("availableContacts").child(String.valueOf(index)).setValue(value);
+    public boolean addAvailableContact(int index, Instructor instructor) {
+        for ( Instructor tempInstructor:availableContacts) {
+           if( tempInstructor.getEmail().equals(instructor.getEmail()))
+               return false;
+        }
+        databaseReference.child("availableContacts").child(String.valueOf(index)).setValue(instructor);
+        availableContacts.add(instructor);
+        return true;
     }
 
 
@@ -195,7 +202,17 @@ public class OnlineDataBase {
         setPendingContacts();
        // databaseReference.child("pendingContacts").child(String.valueOf(index)).setValue(null);
     }
-    public void addPendingContact(int index, Object value) {
-        databaseReference.child("pendingContacts").child(String.valueOf(index)).setValue(value);
+    public boolean addPendingContact(int index, Instructor instructor) {
+        for ( Instructor tempInstructor:pendingContacts) {
+            if( tempInstructor.getEmail().equals(instructor.getEmail()))
+                return false;
+        }
+        databaseReference.child("pendingContacts").child(String.valueOf(index)).setValue(instructor);
+        pendingContacts.add(instructor);
+        return true;
+    }
+
+    public void sendFeedback(String feedback) {
+        databaseReference.child("feedbacks").push().setValue(feedback);
     }
 }
