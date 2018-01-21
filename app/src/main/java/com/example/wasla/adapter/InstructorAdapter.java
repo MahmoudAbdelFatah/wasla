@@ -8,30 +8,31 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wasla.R;
 import com.example.wasla.model.Instructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by MahmoudAbdelFatah on 23-Oct-17.
  */
 
-public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.ViewHolder> {
+public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.ViewHolder> implements Filterable {
     private List<Instructor> instructors;
+    private List<Instructor> instructorsFilteredList;
     private Context context;
-
-    public int getLastLongPress() {
-        return lastLongPress;
-    }
-
     private int lastLongPress;
+
     public InstructorAdapter(Context context, List<Instructor> instructors) {
         this.context = context;
         this.instructors = instructors;
+        this.instructorsFilteredList = instructors;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         // Get the data model based on position
-        final Instructor instructor = instructors.get(position);
+        final Instructor instructor = instructorsFilteredList.get(position);
 
         viewHolder.instructorName.setText(instructor.getName());
         viewHolder.instructorEmail.setText(instructor.getEmail());
@@ -97,7 +98,11 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return instructors.size();
+        return instructorsFilteredList.size();
+    }
+
+    public int getLastLongPress() {
+        return lastLongPress;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -114,5 +119,37 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
             instructorName = itemView.findViewById(R.id.tv_instructor_name);
             instructorEmail = itemView.findViewById(R.id.tv_instructor_email);
         }
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if(charString.isEmpty()) {
+                    instructorsFilteredList = instructors;
+                }
+                else {
+                    List<Instructor> filteredList = new ArrayList<>();
+                    for(Instructor instructor : instructors) {
+                        if(instructor.getName().toLowerCase().contains(charString)||instructor.getEmail().toLowerCase().contains(charString)) {
+                            filteredList.add(instructor);
+                        }
+                    }
+                    instructorsFilteredList = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = instructorsFilteredList;
+                return  filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                instructorsFilteredList = (List<Instructor>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }
