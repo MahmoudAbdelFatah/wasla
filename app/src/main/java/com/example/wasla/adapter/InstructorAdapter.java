@@ -55,9 +55,9 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
 
         viewHolder.instructorName.setText(instructor.getName());
         viewHolder.instructorEmail.setText(instructor.getEmail());
-        if(instructor.getGender().equals("male"))
+        if(instructor.getGender().equals(context.getString(R.string.male_instructor)))
         viewHolder.instructorPhoto.setImageResource(R.drawable.male);
-        else if(instructor.getGender().equals("female"))
+        else if(instructor.getGender().equals(context.getString(R.string.female_instructor)))
             viewHolder.instructorPhoto.setImageResource(R.drawable.female);
         Log.v("adapter", instructor.getEmail());
 

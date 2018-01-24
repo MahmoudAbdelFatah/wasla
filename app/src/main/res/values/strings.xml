@@ -8,9 +8,14 @@
     <string name="send_feedback">Send Feedback</string>
     <string name="pending_list">Pending List</string>
     <string name="search">search</string>
-
+    <string name="contacts_node">availableContacts</string>
+    <string name="feedback_node">feedbacks</string>
+    <string name="male_instructor">male</string>
+    <string name="female_instructor">female</string>
+    <string name="feedback">feedback</string>
     <string-array name="genders">
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
 </resources>

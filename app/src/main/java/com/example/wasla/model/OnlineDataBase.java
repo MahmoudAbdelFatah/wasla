@@ -1,12 +1,10 @@
 package com.example.wasla.model;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.wasla.R;
 import com.example.wasla.adapter.InstructorAdapter;
-import com.example.wasla.adapter.PendingInstructorAdapter;
-import com.example.wasla.view.ContactsActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,37 +24,24 @@ public class OnlineDataBase {
     public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     public static DatabaseReference databaseReference = firebaseDatabase.getReference();
     public final static List<Instructor> availableContacts = new ArrayList<>();
-    public final static List<Instructor> pendingContacts = new ArrayList<>();
+    private Context context;
 
-    public OnlineDataBase() {
-        //   availableContacts=new ArrayList<>() ;
-        //   pendingContacts=new ArrayList<>() ;
-        Log.d("test", "entered constractor");
-    }
-
-    public void setAvailableContacts() {
-        //availableContacts=l;
-       // availableContacts.clear();
-      //  availableContacts.addAll(l);
-        databaseReference.child("availableContacts").setValue(availableContacts);
+    public OnlineDataBase(Context context) {
+        this.context=context;
+        Log.d("test", "entered onlineDataBase constructor");
     }
 
     public void updateAvailableContacts(final InstructorAdapter instructorAdapter) {
-        databaseReference.child("availableContacts").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(context.getString( R.string.contacts_node)).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<List<Instructor>> type = new GenericTypeIndicator<List<Instructor>>() {
                 };
-                //    availableContacts= dataSnapshot.getValue(type);
                 List<Instructor> temp=dataSnapshot.getValue(type);
                 if(temp!=null) {
                     availableContacts.clear();
-
                     availableContacts.addAll(temp);
-                    //  instructors.clear();
-                    // instructors.addAll(dataSnapshot.getValue(type));
-
                     instructorAdapter.notifyDataSetChanged();
                     // Log.d("test",availableContacts.get(1).getName()); //for testing
                 }
@@ -67,152 +52,9 @@ public class OnlineDataBase {
 
             }
         });
-    }
-
-
-    public void setPendingContacts() {
-        //  pendingContacts=l;
-       // pendingContacts.clear();
-       // pendingContacts.addAll(l);
-        databaseReference.child("pendingContacts").setValue(pendingContacts);
-    }
-
-
-    public void updatePendingContacts(final PendingInstructorAdapter instructorAdapter) {
-        databaseReference.child("pendingContacts").addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Instructor>> type = new GenericTypeIndicator<List<Instructor>>() {
-                };
-                //    pendingContacts=dataSnapshot.getValue(type);
-                List<Instructor> temp=dataSnapshot.getValue(type);
-                if(temp!=null) {
-                    pendingContacts.clear();
-                    pendingContacts.addAll(temp);
-                    //  instructors.clear();
-                    // instructors.addAll(dataSnapshot.getValue(type));
-
-                    instructorAdapter.notifyDataSetChanged();
-                    // Log.d("test",availableContacts.get(1).getName()); //for testing
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private ChildEventListener childEventListenerAvailableContacts = new ChildEventListener() {
-        @Override
-        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-        }
-
-        @Override
-        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    };
-
-    public void addAvailableContactsListener() {
-        databaseReference.child("availableContacts").addChildEventListener(childEventListenerAvailableContacts);
-    }
-
-    public void detachAvailableContactsListener() {
-        databaseReference.child("availableContacts").removeEventListener(childEventListenerAvailableContacts);
-    }
-
-
-    private ChildEventListener childEventListenerPendingContacts = new ChildEventListener() {
-        @Override
-        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-        }
-
-        @Override
-        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    };
-
-    public void addPendingContactsListener() {
-        databaseReference.child("pendingContacts").addChildEventListener(childEventListenerPendingContacts);
-    }
-
-    public void detachPendingContactsListener() {
-        databaseReference.child("pendingContacts").removeEventListener(childEventListenerPendingContacts);
-    }
-
-
-
-        public void deleteAvailableContact(int index)
-        {
-            availableContacts.remove(index);
-            setAvailableContacts();
-          //  databaseReference.child("availableContacts").child(String.valueOf(index)).setValue(null);
-        }
-    public boolean addAvailableContact(int index, Instructor instructor) {
-        for ( Instructor tempInstructor:availableContacts) {
-           if( tempInstructor.getEmail().equals(instructor.getEmail()))
-               return false;
-        }
-        databaseReference.child("availableContacts").child(String.valueOf(index)).setValue(instructor);
-        availableContacts.add(instructor);
-        return true;
-    }
-
-
-
-    public void deletePendingContact(int index)
-    {
-        pendingContacts.remove(index);
-        setPendingContacts();
-       // databaseReference.child("pendingContacts").child(String.valueOf(index)).setValue(null);
-    }
-    public boolean addPendingContact(int index, Instructor instructor) {
-        for ( Instructor tempInstructor:pendingContacts) {
-            if( tempInstructor.getEmail().equals(instructor.getEmail()))
-                return false;
-        }
-        databaseReference.child("pendingContacts").child(String.valueOf(index)).setValue(instructor);
-        pendingContacts.add(instructor);
-        return true;
     }
 
     public void sendFeedback(String feedback) {
-        databaseReference.child("feedbacks").push().setValue(feedback);
+        databaseReference.child(context.getString(R.string.feedback_node)).push().setValue(feedback);
     }
 }

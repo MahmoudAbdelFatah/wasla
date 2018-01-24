@@ -26,7 +26,7 @@ public class AddFeedbackDialog extends Activity {
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("feedback", feedbackET.getText().toString());
+                returnIntent.putExtra(getString(R.string.feedback), feedbackET.getText().toString());
                 setResult(RESULT_OK, returnIntent);
                 finish();
             }
