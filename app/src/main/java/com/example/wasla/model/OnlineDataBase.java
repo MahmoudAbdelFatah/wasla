@@ -36,9 +36,14 @@ public class OnlineDataBase {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Instructor>> type = new GenericTypeIndicator<List<Instructor>>() {
+              /*  GenericTypeIndicator<List<Instructor>> type = new GenericTypeIndicator<List<Instructor>>() { //another way
                 };
-                List<Instructor> temp=dataSnapshot.getValue(type);
+                List<Instructor> temp=dataSnapshot.getValue(type); */
+
+                List<Instructor> temp = new ArrayList<>();
+                for (DataSnapshot child: dataSnapshot.getChildren()) {
+                    temp.add(child.getValue(Instructor.class));
+                }
                 if(temp!=null) {
                     availableContacts.clear();
                     availableContacts.addAll(temp);

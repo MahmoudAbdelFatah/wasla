@@ -7,33 +7,33 @@ import java.io.Serializable;
  */
 
 public class Instructor implements Serializable {
-    private String name;
-    private String email;
-    private String gender;
+    private String Name;
+    private String Email;
+    private String Gender;
     public String getGender() {
-        return gender;
+        return Gender;
     }
 
     public void setGender(String gender) {
-        this.gender = gender;
+        this.Gender = gender;
     }
 
 
 
     public  Instructor(){}; //nedded for firebase object
     public String getEmail() {
-        return email;
+        return Email;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.Email = email;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Name = name;
     }
 }
