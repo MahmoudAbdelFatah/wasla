@@ -3,20 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary">
+    android:layout_marginTop="10dp"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/et_feedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:hint="Feedback"
+        android:layout_margin="10dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:hint="Feedback..."
         android:inputType="textMultiLine"
         android:minLines="6"
         android:gravity="top|left"
         android:maxLines="10"
         android:scrollbars="vertical"
+        android:background="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="16dp"
         android:layout_marginRight="8dp"
@@ -24,15 +27,18 @@
 
     <Button
         android:id="@+id/add_feedback_button"
-
         android:layout_width="0dp"
+        android:textAllCaps="false"
         android:layout_height="wrap_content"
-
         android:layout_marginBottom="16dp"
+
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Add"
+        android:elevation="5dp"
+        android:text="Send"
+        android:background="@color/colorAccent"
+        android:textColor="@color/White"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/space"
         app:layout_constraintHorizontal_bias="0.0"
@@ -50,15 +56,17 @@
 
     <Button
         android:id="@+id/cancel_feedback_button"
-
+        android:elevation="5dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="Cancel"
+        android:textAllCaps="false"
+        android:background="@color/colorAccent"
+        android:textColor="@color/White"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.529"
