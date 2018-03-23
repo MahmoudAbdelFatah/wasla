@@ -92,16 +92,6 @@ public class ContactsActivity extends AppCompatActivity {
             @Override
             public void onReceiveValue(List<Instructor> instructors) {
                 instructorsList= (ArrayList<Instructor>) instructors;
-                Instructor instructor;
-                for(int i=0;i<100;i++)
-                {
-                    instructor=new Instructor();
-                    instructor.setName("Mahmoud Gamal");
-                    instructor.setEmail("mahmoud.gamal2791996@yahoo.com");
-                    instructor.setGender(getApplicationContext().getString(R.string.male_instructor));
-                    instructorsList.add(instructor);
-                }
-
                 instructorAdapter = new InstructorAdapter(getApplicationContext(),instructorsList);
                 recyclerView.setAdapter(instructorAdapter);
                 progressBar.setVisibility(View.INVISIBLE);
