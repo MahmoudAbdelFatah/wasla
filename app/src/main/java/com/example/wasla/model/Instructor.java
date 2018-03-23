@@ -10,17 +10,11 @@ public class Instructor implements Serializable {
     private String Name;
     private String Email;
     private String Gender;
-    public String getGender() {
-        return Gender;
+
+    public Instructor() {
+
     }
 
-    public void setGender(String gender) {
-        this.Gender = gender;
-    }
-
-
-
-    public  Instructor(){}; //nedded for firebase object
     public String getEmail() {
         return Email;
     }
@@ -35,5 +29,13 @@ public class Instructor implements Serializable {
 
     public void setName(String name) {
         this.Name = name;
+    }
+
+    public String getGender() {
+        return Gender;
+    }
+
+    public void setGender(String gender) {
+        this.Gender = gender;
     }
 }

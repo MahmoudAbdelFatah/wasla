@@ -1,7 +1,11 @@
 package com.example.wasla.adapter;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,12 +16,18 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wasla.R;
 import com.example.wasla.model.Instructor;
+import com.facebook.share.model.ShareContent;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by MahmoudAbdelFatah on 23-Oct-17.
@@ -27,7 +37,6 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
     private List<Instructor> instructors;
     private List<Instructor> instructorsFilteredList;
     private Context context;
-    private int lastLongPress;
 
     public InstructorAdapter(Context context, List<Instructor> instructors) {
         this.context = context;
@@ -55,21 +64,18 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
 
         viewHolder.instructorName.setText(instructor.getName());
         viewHolder.instructorEmail.setText(instructor.getEmail());
-        if(instructor.getGender().equals(context.getString(R.string.male_instructor)))
-        viewHolder.instructorPhoto.setImageResource(R.drawable.male);
-        else if(instructor.getGender().equals(context.getString(R.string.female_instructor)))
+        if (instructor.getGender().equals(context.getString(R.string.male_instructor)))
+            viewHolder.instructorPhoto.setImageResource(R.drawable.male);
+        else if (instructor.getGender().equals(context.getString(R.string.female_instructor)))
             viewHolder.instructorPhoto.setImageResource(R.drawable.female);
         Log.v("adapter", instructor.getEmail());
 
         viewHolder.imageShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, instructor.getName() + "\n" + instructor.getEmail());
-                if (shareIntent.resolveActivity(context.getPackageManager()) != null) {
-                    context.startActivity(shareIntent);
-                }
+                //TODO: share on facebook
+
+
             }
         });
 
@@ -84,16 +90,6 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
                 }
             }
         });
-
-        viewHolder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-
-                lastLongPress=position;
-                return false;
-            }
-        });
-
     }
 
     @Override
@@ -101,9 +97,6 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
         return instructorsFilteredList.size();
     }
 
-    public int getLastLongPress() {
-        return lastLongPress;
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView instructorPhoto, imageShare;
@@ -127,13 +120,12 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString();
-                if(charString.isEmpty()) {
+                if (charString.isEmpty()) {
                     instructorsFilteredList = instructors;
-                }
-                else {
+                } else {
                     List<Instructor> filteredList = new ArrayList<>();
-                    for(Instructor instructor : instructors) {
-                        if(instructor.getName().toLowerCase().contains(charString)||instructor.getEmail().toLowerCase().contains(charString)) {
+                    for (Instructor instructor : instructors) {
+                        if (instructor.getName().toLowerCase().contains(charString) || instructor.getEmail().toLowerCase().contains(charString)) {
                             filteredList.add(instructor);
                         }
                     }
@@ -142,7 +134,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
 
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = instructorsFilteredList;
-                return  filterResults;
+                return filterResults;
             }
 
             @Override
