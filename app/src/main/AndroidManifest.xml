@@ -23,8 +23,8 @@
 
         <activity
             android:name=".view.AddFeedbackDialog"
-            android:label="Add new Feedback"
-            android:theme="@android:style/Theme.Holo.Light.Dialog.MinWidth" />
+            android:label="Feedback..."
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar.MinWidth" />
 
     </application>
 

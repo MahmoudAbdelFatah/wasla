@@ -27,7 +27,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
     private List<Instructor> instructors;
     private List<Instructor> instructorsFilteredList;
     private Context context;
-    private int lastLongPress;
+
 
     public InstructorAdapter(Context context, List<Instructor> instructors) {
         this.context = context;
@@ -66,33 +66,25 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
             public void onClick(View view) {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, instructor.getName() + "\n" + instructor.getEmail());
+                shareIntent.putExtra(Intent.EXTRA_TEXT, instructor.getEmail());
                 if (shareIntent.resolveActivity(context.getPackageManager()) != null) {
-                    context.startActivity(shareIntent);
+                    context.startActivity(Intent.createChooser(shareIntent, "Share with.."));
                 }
             }
         });
 
-        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.imageSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                 emailIntent.setType("plain/text");
                 emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{instructor.getEmail()});
                 if (emailIntent.resolveActivity(context.getPackageManager()) != null) {
-                    context.startActivity(Intent.createChooser(emailIntent, "Send mail!"));
+                    context.startActivity(Intent.createChooser(emailIntent, "Send mail.."));
                 }
             }
         });
 
-        viewHolder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-
-                lastLongPress=position;
-                return false;
-            }
-        });
 
     }
 
@@ -101,21 +93,19 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
         return instructorsFilteredList.size();
     }
 
-    public int getLastLongPress() {
-        return lastLongPress;
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView instructorPhoto, imageShare;
+        public ImageView instructorPhoto, imageShare,imageSend;
         public TextView instructorName;
         public TextView instructorEmail;
-        public CardView cardView;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.cv_instructor_content);
             instructorPhoto = itemView.findViewById(R.id.iv_instructor_photo);
             imageShare = itemView.findViewById(R.id.iv_share);
+            imageSend=itemView.findViewById(R.id.iv_send_email);
+
             instructorName = itemView.findViewById(R.id.tv_instructor_name);
             instructorEmail = itemView.findViewById(R.id.tv_instructor_email);
         }
