@@ -2,7 +2,6 @@ package com.example.wasla.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,9 +54,9 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
 
         viewHolder.instructorName.setText(instructor.getName());
         viewHolder.instructorEmail.setText(instructor.getEmail());
-        if(instructor.getGender().equals(context.getString(R.string.male_instructor)))
-        viewHolder.instructorPhoto.setImageResource(R.drawable.male);
-        else if(instructor.getGender().equals(context.getString(R.string.female_instructor)))
+        if (instructor.getGender().equals(context.getString(R.string.male_instructor)))
+            viewHolder.instructorPhoto.setImageResource(R.drawable.male);
+        else if (instructor.getGender().equals(context.getString(R.string.female_instructor)))
             viewHolder.instructorPhoto.setImageResource(R.drawable.female);
         Log.v("adapter", instructor.getEmail());
 
@@ -95,7 +94,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView instructorPhoto, imageShare,imageSend;
+        public ImageView instructorPhoto, imageShare, imageSend;
         public TextView instructorName;
         public TextView instructorEmail;
 
@@ -104,7 +103,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
             super(itemView);
             instructorPhoto = itemView.findViewById(R.id.iv_instructor_photo);
             imageShare = itemView.findViewById(R.id.iv_share);
-            imageSend=itemView.findViewById(R.id.iv_send_email);
+            imageSend = itemView.findViewById(R.id.iv_send_email);
 
             instructorName = itemView.findViewById(R.id.tv_instructor_name);
             instructorEmail = itemView.findViewById(R.id.tv_instructor_email);
@@ -117,13 +116,12 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString();
-                if(charString.isEmpty()) {
+                if (charString.isEmpty()) {
                     instructorsFilteredList = instructors;
-                }
-                else {
+                } else {
                     List<Instructor> filteredList = new ArrayList<>();
-                    for(Instructor instructor : instructors) {
-                        if(instructor.getName().toLowerCase().contains(charString)||instructor.getEmail().toLowerCase().contains(charString)) {
+                    for (Instructor instructor : instructors) {
+                        if (instructor.getName().toLowerCase().contains(charString) || instructor.getEmail().toLowerCase().contains(charString)) {
                             filteredList.add(instructor);
                         }
                     }
@@ -132,7 +130,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
 
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = instructorsFilteredList;
-                return  filterResults;
+                return filterResults;
             }
 
             @Override

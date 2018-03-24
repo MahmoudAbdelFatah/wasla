@@ -18,6 +18,7 @@
             android:authorities="com.facebook.app.FacebookContentProvider{com.example.wasla}"
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true" />
+
         <activity android:name=".view.ContactsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
