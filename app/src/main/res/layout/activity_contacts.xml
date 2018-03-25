@@ -7,41 +7,41 @@
 
     android:orientation="vertical"
     tools:context="com.example.wasla.view.ContactsActivity">
-
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"></include>
-
+        layout="@layout/toolbar">
+    </include>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
         >
-
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/progressBar"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:visibility="gone" />
+            android:visibility="gone"
+            />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_instructor"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+            android:scrollbars="vertical">
+        </android.support.v7.widget.RecyclerView>
 
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="25dp"
-            android:layout_marginRight="25dp"
-            app:rippleColor="#000000"
-            app:layout_behavior="com.example.wasla.animation.FAB_Hide_on_Scroll"
-            android:id="@+id/bt_fab"
-            android:visibility="invisible"
-            android:src="@drawable/ic_feedback_white_24dp" />
+<android.support.design.widget.FloatingActionButton
+    android:layout_width="56dp"
+    android:layout_height="56dp"
+    android:layout_gravity="bottom|end"
+    android:layout_marginBottom="16dp"
+    android:layout_marginRight="16dp"
+    app:rippleColor="#000000"
+    android:id="@+id/bt_fab"
+    android:visibility="invisible"
+    android:src="@drawable/ic_feedback_white_24dp"
+    />
 
 
     </FrameLayout>

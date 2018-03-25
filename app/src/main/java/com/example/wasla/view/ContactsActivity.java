@@ -4,16 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.webkit.ValueCallback;
+import android.widget.EditText;
+import android.support.v7.widget.SearchView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -21,6 +30,9 @@ import com.example.wasla.R;
 import com.example.wasla.adapter.InstructorAdapter;
 import com.example.wasla.model.Instructor;
 import com.example.wasla.model.OnlineDataBase;
+import com.example.wasla.util.MyRecyclerScroll;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,27 +45,32 @@ public class ContactsActivity extends AppCompatActivity {
     private OnlineDataBase onlineDataBase;
     private Toolbar toolbar;
     private ArrayList<Instructor> instructorsList;
-    private final int AddFeedbackDialogRequestCoder = 1;
+    private final int AddFeedbackDialogRequestCoder=1;
     private ProgressBar progressBar;
     private android.support.design.widget.FloatingActionButton floatingActionButton;
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == AddFeedbackDialogRequestCoder) {
+      if (requestCode==AddFeedbackDialogRequestCoder)
+        {
             if (resultCode == RESULT_OK) {
                 String feedback = data.getStringExtra(getString(R.string.feedback));
                 onlineDataBase.sendFeedback(feedback, new ValueCallback<Boolean>() {
                     @Override
                     public void onReceiveValue(Boolean aBoolean) {
-                        if (aBoolean)
+                        if(aBoolean)
                             Toasty.success(getBaseContext(), "Successfully send the feedback!"
                                     , Toast.LENGTH_SHORT, true).show();
                         else
                             Toasty.error(getBaseContext(), "There is an error,try again later!", Toast.LENGTH_SHORT, true).show();
+
                     }
                 });
+
             }
+
+
+
         }
     }
 
@@ -62,44 +79,67 @@ public class ContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_contacts);
-        toolbar = findViewById(R.id.toolbar);
-        progressBar = findViewById(R.id.progressBar);
-        floatingActionButton = findViewById(R.id.bt_fab);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        progressBar=findViewById(R.id.progressBar);
+
+        floatingActionButton=findViewById(R.id.bt_fab);
+        final Animation animation = AnimationUtils.loadAnimation(this, R.anim.simple_grow);
 
         setSupportActionBar(toolbar);
-        if (!isNetworkConnected()) {
-            Toasty.warning(this, "Check the internet connection!", Toast.LENGTH_LONG, true).show();
+
+        if(!isNetworkConnected()) {
+            Toasty.warning(this, "check the internet connection!", Toast.LENGTH_LONG, true).show();
         }
+
         onlineDataBase = new OnlineDataBase(this);
-        instructorsList = new ArrayList<>();
+        instructorsList=new ArrayList<>();
         recyclerView = findViewById(R.id.rv_instructor);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+
+        recyclerView.setOnScrollListener(new MyRecyclerScroll() {
+            @Override
+            public void show() {
+                floatingActionButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(3)).start();
+            }
+
+            @Override
+            public void hide() {
+                floatingActionButton.animate().translationY(floatingActionButton.getHeight() + 60).setInterpolator(new AccelerateInterpolator(3)).start();
+            }
+        });
+
+        //    registerForContextMenu(recyclerView);
         progressBar.setVisibility(View.VISIBLE);
 
         onlineDataBase.updateAvailableContacts(new ValueCallback<List<Instructor>>() {
             @Override
             public void onReceiveValue(List<Instructor> instructors) {
-                instructorsList = (ArrayList<Instructor>) instructors;
-                instructorAdapter = new InstructorAdapter(getApplicationContext(), instructorsList);
+                instructorsList= (ArrayList<Instructor>) instructors;
+                instructorAdapter = new InstructorAdapter(getApplicationContext(),instructorsList);
                 recyclerView.setAdapter(instructorAdapter);
                 progressBar.setVisibility(View.INVISIBLE);
+                floatingActionButton.startAnimation(animation);
                 floatingActionButton.setVisibility(View.VISIBLE);
+
             }
         });
+
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(getApplicationContext(), AddFeedbackDialog.class), AddFeedbackDialogRequestCoder);
+                startActivityForResult(new Intent(getApplicationContext(), AddFeedbackDialog.class),AddFeedbackDialogRequestCoder);
             }
         });
 
     }
+
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,6 +147,7 @@ public class ContactsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem search = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
+       // searchView.setBackgroundColor(getResources().getColor(R.color.White));
         search(searchView);
         return true;
     }
@@ -125,5 +166,7 @@ public class ContactsActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 }
