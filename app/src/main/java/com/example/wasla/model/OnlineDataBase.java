@@ -17,7 +17,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import es.dmoral.toasty.Toasty;
 
@@ -33,14 +36,13 @@ public class OnlineDataBase {
 
     public OnlineDataBase(Context context) {
         this.context = context;
-        Log.d("test", "entered onlineDataBase constructor");
     }
 
     public void updateAvailableContacts(final ValueCallback<List<Instructor>> valueCallback) {
         databaseReference.child(context.getString(R.string.contacts_node)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<Instructor> instructors = new ArrayList<>();
+                LinkedHashSet<Instructor> instructors = new LinkedHashSet<>();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     instructors.add(child.getValue(Instructor.class));
                 }

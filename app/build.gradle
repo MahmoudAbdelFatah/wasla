@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes.each {
+        it.buildConfigField 'String', 'INSTABUG_KEY', INSTABUG_KEY
+    }
 }
 
 dependencies {
@@ -36,6 +39,8 @@ dependencies {
     compile 'com.android.support:preference-v7:26.0.0'
     compile 'com.android.support:design:26.0.0'
     compile 'com.facebook.android:facebook-share:[4,5)'
+    compile 'com.instabug.library:instabug:4.12.1'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

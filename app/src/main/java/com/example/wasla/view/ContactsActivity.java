@@ -4,15 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -21,7 +18,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.webkit.ValueCallback;
-import android.widget.EditText;
 import android.support.v7.widget.SearchView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -30,9 +26,10 @@ import com.example.wasla.R;
 import com.example.wasla.adapter.InstructorAdapter;
 import com.example.wasla.model.Instructor;
 import com.example.wasla.model.OnlineDataBase;
+import com.example.wasla.util.MyConstants;
 import com.example.wasla.util.MyRecyclerScroll;
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
+import com.instabug.library.Instabug;
+import com.instabug.library.invocation.InstabugInvocationEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,35 +45,14 @@ public class ContactsActivity extends AppCompatActivity {
     private final int AddFeedbackDialogRequestCoder=1;
     private ProgressBar progressBar;
     private android.support.design.widget.FloatingActionButton floatingActionButton;
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-      if (requestCode==AddFeedbackDialogRequestCoder)
-        {
-            if (resultCode == RESULT_OK) {
-                String feedback = data.getStringExtra(getString(R.string.feedback));
-                onlineDataBase.sendFeedback(feedback, new ValueCallback<Boolean>() {
-                    @Override
-                    public void onReceiveValue(Boolean aBoolean) {
-                        if(aBoolean)
-                            Toasty.success(getBaseContext(), "Successfully send the feedback!"
-                                    , Toast.LENGTH_SHORT, true).show();
-                        else
-                            Toasty.error(getBaseContext(), "There is an error,try again later!", Toast.LENGTH_SHORT, true).show();
-
-                    }
-                });
-
-            }
-
-
-
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        new Instabug.Builder(getApplication(), MyConstants.INSTABUG_KEY)
+                .setInvocationEvent(InstabugInvocationEvent.SHAKE)
+                .build();
 
         setContentView(R.layout.activity_contacts);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -107,8 +83,6 @@ public class ContactsActivity extends AppCompatActivity {
                 floatingActionButton.animate().translationY(floatingActionButton.getHeight() + 60).setInterpolator(new AccelerateInterpolator(3)).start();
             }
         });
-
-        //    registerForContextMenu(recyclerView);
         progressBar.setVisibility(View.VISIBLE);
 
         onlineDataBase.updateAvailableContacts(new ValueCallback<List<Instructor>>() {
@@ -124,7 +98,6 @@ public class ContactsActivity extends AppCompatActivity {
             }
         });
 
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,12 +107,33 @@ public class ContactsActivity extends AppCompatActivity {
 
     }
 
-
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode==AddFeedbackDialogRequestCoder)
+        {
+            if (resultCode == RESULT_OK) {
+                String feedback = data.getStringExtra(getString(R.string.feedback));
+                onlineDataBase.sendFeedback(feedback, new ValueCallback<Boolean>() {
+                    @Override
+                    public void onReceiveValue(Boolean aBoolean) {
+                        if(aBoolean)
+                            Toasty.success(getBaseContext(), "Successfully send the feedback!"
+                                    , Toast.LENGTH_SHORT, true).show();
+                        else
+                            Toasty.error(getBaseContext(), "There is an error,try again later!", Toast.LENGTH_SHORT, true).show();
+
+                    }
+                });
+
+            }
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -166,7 +160,4 @@ public class ContactsActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }
