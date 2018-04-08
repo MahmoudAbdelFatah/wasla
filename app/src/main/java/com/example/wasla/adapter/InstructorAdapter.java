@@ -2,6 +2,7 @@ package com.example.wasla.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,7 +61,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
             viewHolder.instructorPhoto.setImageResource(R.drawable.female);
         Log.v("adapter", instructor.getEmail());
 
-        viewHolder.imageShare.setOnClickListener(new View.OnClickListener() {
+        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -94,19 +95,21 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView instructorPhoto, imageShare, imageSend;
+        public ImageView instructorPhoto, imageSend;
         public TextView instructorName;
         public TextView instructorEmail;
+        public CardView cardView;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             instructorPhoto = itemView.findViewById(R.id.iv_instructor_photo);
-            imageShare = itemView.findViewById(R.id.iv_share);
+            //imageShare = itemView.findViewById(R.id.iv_share);
             imageSend = itemView.findViewById(R.id.iv_send_email);
 
             instructorName = itemView.findViewById(R.id.tv_instructor_name);
             instructorEmail = itemView.findViewById(R.id.tv_instructor_email);
+            cardView = itemView.findViewById(R.id.card_view);
         }
     }
 
@@ -115,7 +118,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
+                String charString = charSequence.toString().toLowerCase();
                 if (charString.isEmpty()) {
                     instructorsFilteredList = instructors;
                 } else {

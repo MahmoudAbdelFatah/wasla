@@ -6,7 +6,7 @@
     android:layout_marginTop="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginLeft="10dp"
-
+    android:id="@+id/card_view"
     app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="4dp"
     app:cardElevation="5dp">
@@ -59,14 +59,6 @@
                 android:layout_marginBottom="5dp"
                 android:gravity="end"
                 >
-                <ImageView
-                    android:id="@+id/iv_share"
-                    android:layout_width="35dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_gravity="end"
-                    android:contentDescription="@string/share_image"
-                    android:src="@android:drawable/ic_menu_share" />
                 <ImageView
                     android:id="@+id/iv_send_email"
                     android:layout_width="35dp"

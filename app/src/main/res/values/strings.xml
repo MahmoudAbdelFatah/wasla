@@ -17,5 +17,5 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
-
+    <string name="home_name">Home</string>
 </resources>

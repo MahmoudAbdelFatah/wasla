@@ -28,6 +28,8 @@ import com.example.wasla.model.Instructor;
 import com.example.wasla.model.OnlineDataBase;
 import com.example.wasla.util.MyConstants;
 import com.example.wasla.util.MyRecyclerScroll;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.FirebaseDatabase;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 
@@ -49,11 +51,18 @@ public class ContactsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
+    }
 
+    void init() {
         new Instabug.Builder(getApplication(), MyConstants.INSTABUG_KEY)
                 .setInvocationEvent(InstabugInvocationEvent.SHAKE)
                 .build();
-
+        //present Data Offline
+        if (!FirebaseApp.getApps(this).isEmpty()) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
+        FirebaseDatabase.getInstance().getReference().keepSynced(true);
         setContentView(R.layout.activity_contacts);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         progressBar=findViewById(R.id.progressBar);
@@ -104,7 +113,6 @@ public class ContactsActivity extends AppCompatActivity {
                 startActivityForResult(new Intent(getApplicationContext(), AddFeedbackDialog.class),AddFeedbackDialogRequestCoder);
             }
         });
-
     }
 
     private boolean isNetworkConnected() {
@@ -146,7 +154,7 @@ public class ContactsActivity extends AppCompatActivity {
         return true;
     }
 
-    private void search(SearchView searchView) {
+    private void search(final SearchView searchView) {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -155,7 +163,8 @@ public class ContactsActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                instructorAdapter.getFilter().filter(s);
+                if(instructorsList.size()>0)
+                    instructorAdapter.getFilter().filter(s);
                 return true;
             }
         });

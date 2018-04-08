@@ -17,9 +17,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import es.dmoral.toasty.Toasty;
@@ -42,13 +46,23 @@ public class OnlineDataBase {
         databaseReference.child(context.getString(R.string.contacts_node)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                LinkedHashSet<Instructor> instructors = new LinkedHashSet<>();
+                Map<String,Instructor> instructors = new HashMap<String,Instructor>();
+                Instructor instructor;
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    instructors.add(child.getValue(Instructor.class));
+                    instructor = child.getValue(Instructor.class);
+                    instructors.put(instructor.getEmail().toLowerCase(), instructor);
                 }
                 if (instructors != null) {
                     availableContacts.clear();
-                    availableContacts.addAll(instructors);
+                    availableContacts.addAll(instructors.values());
+                    Log.i("size", instructors.values().size()+"");
+                    //sort contacts
+                    Collections.sort(availableContacts, new Comparator<Instructor>() {
+                        @Override
+                        public int compare(Instructor o1, Instructor o2) {
+                            return o1.getName().compareTo(o2.getName());
+                        }
+                    });
                     valueCallback.onReceiveValue(availableContacts);
                 }
             }
