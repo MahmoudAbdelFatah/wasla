@@ -19,12 +19,12 @@ public class Instructor implements Serializable {
         return Email;
     }
 
-    public String getName() {
-        return Name;
-    }
-
     public void setEmail(String email) {
         this.Email = email;
+    }
+
+    public String getName() {
+        return Name;
     }
 
     public void setName(String name) {
