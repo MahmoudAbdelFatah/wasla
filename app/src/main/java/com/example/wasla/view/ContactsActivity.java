@@ -19,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.webkit.ValueCallback;
 import android.support.v7.widget.SearchView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 
+import android.support.design.widget.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +49,10 @@ public class ContactsActivity extends AppCompatActivity {
     private ArrayList<Instructor> instructorsList;
     private final int AddFeedbackDialogRequestCoder=1;
     private ProgressBar progressBar;
-    private android.support.design.widget.FloatingActionButton floatingActionButton;
+    private FloatingActionButton floatingActionButton;
+    private LinearLayout layoutFabShare;
+    private LinearLayout layoutFabFeedback;
+    private boolean fabExpanded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +64,16 @@ public class ContactsActivity extends AppCompatActivity {
         new Instabug.Builder(getApplication(), MyConstants.INSTABUG_KEY)
                 .setInvocationEvent(InstabugInvocationEvent.SHAKE)
                 .build();
-        //present Data Offline
-        if (!FirebaseApp.getApps(this).isEmpty()) {
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        }
+
         FirebaseDatabase.getInstance().getReference().keepSynced(true);
         setContentView(R.layout.activity_contacts);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         progressBar=findViewById(R.id.progressBar);
 
-        floatingActionButton=findViewById(R.id.bt_fab);
+        floatingActionButton = (FloatingActionButton) this.findViewById(R.id.fab_setting);
+        layoutFabFeedback = (LinearLayout) this.findViewById(R.id.layout_fab_feedback);
+        layoutFabShare = (LinearLayout) this.findViewById(R.id.layout_fab_share);
+
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.simple_grow);
 
         setSupportActionBar(toolbar);
@@ -98,7 +104,7 @@ public class ContactsActivity extends AppCompatActivity {
             @Override
             public void onReceiveValue(List<Instructor> instructors) {
                 instructorsList= (ArrayList<Instructor>) instructors;
-                instructorAdapter = new InstructorAdapter(getApplicationContext(),instructorsList);
+                instructorAdapter = new InstructorAdapter(ContactsActivity.this, instructorsList);
                 recyclerView.setAdapter(instructorAdapter);
                 progressBar.setVisibility(View.INVISIBLE);
                 floatingActionButton.startAnimation(animation);
@@ -110,9 +116,53 @@ public class ContactsActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(getApplicationContext(), AddFeedbackDialog.class),AddFeedbackDialogRequestCoder);
+                if (fabExpanded == true) {
+                    closeSubMenusFab();
+                } else {
+                    openSubMenusFab();
+                }
             }
         });
+
+        layoutFabFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeSubMenusFab();
+                startActivityForResult(new Intent(ContactsActivity.this, AddFeedbackDialog.class), AddFeedbackDialogRequestCoder);
+            }
+        });
+
+        layoutFabShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeSubMenusFab();
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                //TODO: share app from here
+                sendIntent.putExtra(Intent.EXTRA_TEXT,
+                        "");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+            }
+        });
+
+        closeSubMenusFab();
+    }
+
+    private void closeSubMenusFab() {
+        layoutFabShare.setVisibility(View.INVISIBLE);
+        layoutFabFeedback.setVisibility(View.INVISIBLE);
+        floatingActionButton.setImageResource(R.drawable.ic_add_black_24dp);
+        fabExpanded = false;
+    }
+
+    //Opens FAB submenus
+    private void openSubMenusFab() {
+        layoutFabShare.setVisibility(View.VISIBLE);
+        layoutFabFeedback.setVisibility(View.VISIBLE);
+        //Change settings icon to 'X' icon
+        floatingActionButton.setImageResource(R.drawable.ic_close_black_24dp);
+        fabExpanded = true;
     }
 
     private boolean isNetworkConnected() {

@@ -11,22 +11,29 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".util.CheckOfflineFirebase">
 
-        <activity android:name=".view.SplashActivity" android:theme="@style/SplashTheme">
+        <activity
+            android:name=".view.SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
 
             </intent-filter>
-
         </activity>
-        <activity android:name=".view.ContactsActivity"/>
+
+        <activity
+            android:name=".view.ContactsActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.AddFeedbackDialog"
             android:label="Feedback..."
-            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar.MinWidth" />
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar.MinWidth"
+            android:screenOrientation="portrait" />
 
     </application>
 

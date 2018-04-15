@@ -12,10 +12,11 @@
     <string name="feedback_node">feedbacks</string>
     <string name="male_instructor">male</string>
     <string name="female_instructor">female</string>
-    <string name="feedback">feedback</string>
+    <string name="feedback">Feedback</string>
     <string-array name="genders">
         <item>Male</item>
         <item>Female</item>
     </string-array>
-    <string name="home_name">Home</string>
+    <string name="home_name">FCIS CONTACTS</string>
+    <string name="share_app">Share App</string>
 </resources>

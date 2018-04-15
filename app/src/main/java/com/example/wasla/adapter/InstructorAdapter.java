@@ -3,21 +3,31 @@ package com.example.wasla.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ValueCallback;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wasla.R;
 import com.example.wasla.model.Instructor;
+import com.example.wasla.model.OnlineDataBase;
+import com.example.wasla.view.AddFeedbackDialog;
+import com.example.wasla.view.ContactsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by MahmoudAbdelFatah on 23-Oct-17.
@@ -27,6 +37,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
     private List<Instructor> instructors;
     private List<Instructor> instructorsFilteredList;
     private Context context;
+    private OnlineDataBase onlineDataBase;
 
 
     public InstructorAdapter(Context context, List<Instructor> instructors) {
@@ -49,14 +60,15 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         // Get the data model based on position
         final Instructor instructor = instructorsFilteredList.get(position);
-
         viewHolder.instructorName.setText(instructor.getName());
         viewHolder.instructorEmail.setText(instructor.getEmail());
         viewHolder.instructorName.setSelected(true);
         viewHolder.instructorEmail.setSelected(true);
+        onlineDataBase = new OnlineDataBase(context);
+
         if (instructor.getGender().equals(context.getString(R.string.male_instructor)))
             viewHolder.instructorPhoto.setImageResource(R.drawable.male);
         else if (instructor.getGender().equals(context.getString(R.string.female_instructor)))
@@ -75,12 +87,45 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
             }
         });
 
+        viewHolder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                //creating a popup menu
+                PopupMenu popup = new PopupMenu(context, viewHolder.cardView, Gravity.CENTER_VERTICAL);
+                //inflating menu from xml resource
+                popup.inflate(R.menu.menu_report);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (R.id.report == item.getItemId()) {
+                            onlineDataBase.sendFeedback("Reported email: " + instructor.getEmail(),
+                                    new ValueCallback<Boolean>() {
+                                        @Override
+                                        public void onReceiveValue(Boolean aBoolean) {
+                                            if (aBoolean)
+                                                Toasty.success(context, "This email is Reported Successfully!"
+                                                        , Toast.LENGTH_SHORT, true).show();
+                                            else
+                                                Toasty.error(context, "There is an error,try again later!",
+                                                        Toast.LENGTH_SHORT, true).show();
+                                        }
+                                    });
+                        }
+                        return false;
+                    }
+                });
+                popup.show();
+                return true;
+            }
+        });
+
         viewHolder.imageSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                 emailIntent.setType("plain/text");
                 emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{instructor.getEmail()});
+                emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 if (emailIntent.resolveActivity(context.getPackageManager()) != null) {
                     context.startActivity(Intent.createChooser(emailIntent, "Send mail.."));
                 }
