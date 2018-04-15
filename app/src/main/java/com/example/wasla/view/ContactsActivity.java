@@ -95,6 +95,7 @@ public class ContactsActivity extends AppCompatActivity {
 
             @Override
             public void hide() {
+                closeSubMenusFab();
                 floatingActionButton.animate().translationY(floatingActionButton.getHeight() + 60).setInterpolator(new AccelerateInterpolator(3)).start();
             }
         });
