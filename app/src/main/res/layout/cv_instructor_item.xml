@@ -65,17 +65,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="3dp"
                 android:gravity="end"
                 >
                 <ImageView
-                    android:id="@+id/iv_send_email"
-                    android:layout_width="35dp"
-                    android:layout_height="30dp"
+                    android:id="@+id/iv_share_email"
+                    android:layout_width="40dp"
+                    android:layout_height="35dp"
                     android:layout_marginRight="5dp"
                     android:layout_gravity="end"
                     android:contentDescription="@string/share_image"
-                    android:src="@drawable/ic_menu_send_2" />
+                    android:src="@drawable/share_icon" />
 
             </LinearLayout>
 

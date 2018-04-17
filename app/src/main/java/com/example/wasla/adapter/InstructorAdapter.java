@@ -73,16 +73,16 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
             viewHolder.instructorPhoto.setImageResource(R.drawable.male);
         else if (instructor.getGender().equals(context.getString(R.string.female_instructor)))
             viewHolder.instructorPhoto.setImageResource(R.drawable.female);
-        Log.v("adapter", instructor.getEmail());
 
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, instructor.getEmail());
-                if (shareIntent.resolveActivity(context.getPackageManager()) != null) {
-                    context.startActivity(Intent.createChooser(shareIntent, "Share with.."));
+                Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                emailIntent.setType("plain/text");
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{instructor.getEmail()});
+                emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (emailIntent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(Intent.createChooser(emailIntent, "Send mail.."));
                 }
             }
         });
@@ -119,15 +119,14 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
             }
         });
 
-        viewHolder.imageSend.setOnClickListener(new View.OnClickListener() {
+        viewHolder.imageShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-                emailIntent.setType("plain/text");
-                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{instructor.getEmail()});
-                emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (emailIntent.resolveActivity(context.getPackageManager()) != null) {
-                    context.startActivity(Intent.createChooser(emailIntent, "Send mail.."));
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, instructor.getEmail());
+                if (shareIntent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(Intent.createChooser(shareIntent, "Share with.."));
                 }
             }
         });
@@ -142,7 +141,7 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView instructorPhoto, imageSend;
+        public ImageView instructorPhoto, imageShare;
         public TextView instructorName;
         public TextView instructorEmail;
         public CardView cardView;
@@ -151,8 +150,8 @@ public class InstructorAdapter extends RecyclerView.Adapter<InstructorAdapter.Vi
         public ViewHolder(View itemView) {
             super(itemView);
             instructorPhoto = itemView.findViewById(R.id.iv_instructor_photo);
-            //imageShare = itemView.findViewById(R.id.iv_share);
-            imageSend = itemView.findViewById(R.id.iv_send_email);
+            imageShare = itemView.findViewById(R.id.iv_share_email);
+            //imageSend = itemView.findViewById(R.id.iv_send_email);
 
             instructorName = itemView.findViewById(R.id.tv_instructor_name);
             instructorEmail = itemView.findViewById(R.id.tv_instructor_email);
