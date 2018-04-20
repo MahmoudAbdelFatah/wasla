@@ -30,7 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -45,13 +44,14 @@
                 android:focusableInTouchMode="true"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/textSize"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginTop="10dp" />
 
             <TextView
                 android:id="@+id/tv_instructor_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:ellipsize="marquee"
                 android:singleLine="true"
@@ -65,7 +65,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="3dp"
                 android:gravity="end"
                 >
                 <ImageView
@@ -75,7 +74,8 @@
                     android:layout_marginRight="5dp"
                     android:layout_gravity="end"
                     android:contentDescription="@string/share_image"
-                    android:src="@drawable/share_icon" />
+                    android:src="@drawable/share_icon"
+                    android:layout_marginBottom="3dp" />
 
             </LinearLayout>
 
