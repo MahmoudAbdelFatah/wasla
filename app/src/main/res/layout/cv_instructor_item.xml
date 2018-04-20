@@ -30,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/tv_instructor_name"
@@ -45,7 +46,8 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/textSize"
                 android:textStyle="bold"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:layout_weight="5" />
 
             <TextView
                 android:id="@+id/tv_instructor_email"
@@ -60,24 +62,17 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:textSize="20sp"
-                 />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="end"
-                >
-                <ImageView
-                    android:id="@+id/iv_share_email"
-                    android:layout_width="40dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_gravity="end"
-                    android:contentDescription="@string/share_image"
-                    android:src="@drawable/share_icon"
-                    android:layout_marginBottom="7dp" />
+                android:layout_weight="5" />
 
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_share_email"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="end"
+                android:contentDescription="@string/share_image"
+                android:src="@drawable/share_icon"
+                android:paddingBottom="5dp" />
 
         </LinearLayout>
 
