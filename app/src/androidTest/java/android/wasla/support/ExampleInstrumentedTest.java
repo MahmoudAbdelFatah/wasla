@@ -1,4 +1,4 @@
-package com.example.wasla;
+package android.wasla.support;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.wasla", appContext.getPackageName());
+        assertEquals("android.wasla.support", appContext.getPackageName());
     }
 }

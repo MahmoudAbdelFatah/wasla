@@ -1,8 +1,6 @@
-package com.example.wasla.util;
+package android.wasla.support.util;
 
-import android.os.Build;
-
-import com.example.wasla.BuildConfig;
+import android.wasla.support.BuildConfig;
 
 /**
  * Created by mahmoudabdelfatahabd on 29-Mar-18.

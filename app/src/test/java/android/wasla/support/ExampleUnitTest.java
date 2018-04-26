@@ -1,4 +1,4 @@
-package com.example.wasla;
+package android.wasla.support;
 
 import org.junit.Test;
 

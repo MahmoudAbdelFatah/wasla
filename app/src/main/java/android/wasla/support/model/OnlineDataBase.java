@@ -1,4 +1,4 @@
-package com.example.wasla.model;
+package android.wasla.support.model;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -7,7 +7,6 @@ import android.util.Log;
 import android.webkit.ValueCallback;
 import android.widget.Toast;
 
-import com.example.wasla.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +40,7 @@ public class OnlineDataBase {
     }
 
     public void updateAvailableContacts(final ValueCallback<List<Instructor>> valueCallback) {
-        databaseReference.child(context.getString(R.string.contacts_node)).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(context.getString(android.wasla.support.R.string.contacts_node)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Map<String,Instructor> instructors = new HashMap<String,Instructor>();
@@ -81,7 +80,7 @@ public class OnlineDataBase {
         if (!isNetworkConnected())
             Toasty.warning(context, "Not Added, Check the internet connection!", Toast.LENGTH_LONG, true).show();
         else {
-            databaseReference.child(context.getString(R.string.feedback_node)).push().setValue(feedback).addOnFailureListener(new OnFailureListener() {
+            databaseReference.child(context.getString(android.wasla.support.R.string.feedback_node)).push().setValue(feedback).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     b.onReceiveValue(false);

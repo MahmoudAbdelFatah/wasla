@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:orientation="vertical"
-    tools:context="com.example.wasla.view.ContactsActivity">
+    tools:context="com.example.support.android.example.support.view.ContactsActivity">
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar">

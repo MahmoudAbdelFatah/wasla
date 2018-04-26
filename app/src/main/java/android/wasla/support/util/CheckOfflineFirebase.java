@@ -1,4 +1,4 @@
-package com.example.wasla.util;
+package android.wasla.support.util;
 
 import android.app.Application;
 

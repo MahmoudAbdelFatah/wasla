@@ -1,11 +1,10 @@
-package com.example.wasla.adapter;
+package android.wasla.support.adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,11 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.wasla.R;
-import com.example.wasla.model.Instructor;
-import com.example.wasla.model.OnlineDataBase;
-import com.example.wasla.view.AddFeedbackDialog;
-import com.example.wasla.view.ContactsActivity;
+import android.wasla.support.R;
+import android.wasla.support.model.Instructor;
+import android.wasla.support.model.OnlineDataBase;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.wasla.model;
+package android.wasla.support.model;
 
 import java.io.Serializable;
 
