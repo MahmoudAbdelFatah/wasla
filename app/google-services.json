@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:949724736824:android:9e35b64a75f48c76",
         "android_client_info": {
-          "package_name": "com.example.wasla"
+          "package_name": "android.support.wasla"
         }
       },
       "oauth_client": [
