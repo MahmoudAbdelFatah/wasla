@@ -1,4 +1,4 @@
-package android.wasla.support.view;
+package android.support.wasla.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,10 +16,10 @@ public class AddFeedbackDialog extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(android.wasla.support.R.layout.activity_add_feedback_dialog);
-        feedbackET = findViewById(android.wasla.support.R.id.et_feedback);
-        final Button addButton = findViewById(android.wasla.support.R.id.add_feedback_button);
-        final Button cancelButton = findViewById(android.wasla.support.R.id.cancel_feedback_button);
+        setContentView(android.support.wasla.R.layout.activity_add_feedback_dialog);
+        feedbackET = findViewById(android.support.wasla.R.id.et_feedback);
+        final Button addButton = findViewById(android.support.wasla.R.id.add_feedback_button);
+        final Button cancelButton = findViewById(android.support.wasla.R.id.cancel_feedback_button);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,7 +28,7 @@ public class AddFeedbackDialog extends Activity {
                 if (feedbackET.getText().toString().isEmpty() || feedbackET.getText().toString().trim().length() == 0)
                     Toasty.warning(getApplicationContext(), "Empty Text!", Toast.LENGTH_SHORT, true).show();
                 else {
-                    returnIntent.putExtra(getString(android.wasla.support.R.string.feedback), feedbackET.getText().toString().trim());
+                    returnIntent.putExtra(getString(android.support.wasla.R.string.feedback), feedbackET.getText().toString().trim());
                     setResult(RESULT_OK, returnIntent);
                     finish();
                 }

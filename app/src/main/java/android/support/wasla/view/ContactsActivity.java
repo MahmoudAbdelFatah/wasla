@@ -1,11 +1,11 @@
-package android.wasla.support.view;
+package android.support.wasla.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.wasla.support.adapter.InstructorAdapter;
-import android.wasla.support.model.Instructor;
-import android.wasla.support.model.OnlineDataBase;
-import android.wasla.support.util.MyConstants;
+import android.support.wasla.adapter.InstructorAdapter;
+import android.support.wasla.model.Instructor;
+import android.support.wasla.model.OnlineDataBase;
+import android.support.wasla.util.MyConstants;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -27,7 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import android.wasla.support.util.MyRecyclerScroll;
+import android.support.wasla.util.MyRecyclerScroll;
 import com.google.firebase.database.FirebaseDatabase;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
@@ -64,15 +64,15 @@ public class ContactsActivity extends AppCompatActivity {
                 .build();
 
         FirebaseDatabase.getInstance().getReference().keepSynced(true);
-        setContentView(android.wasla.support.R.layout.activity_contacts);
-        toolbar = (Toolbar) findViewById(android.wasla.support.R.id.toolbar);
-        progressBar = findViewById(android.wasla.support.R.id.progressBar);
+        setContentView(android.support.wasla.R.layout.activity_contacts);
+        toolbar = (Toolbar) findViewById(android.support.wasla.R.id.toolbar);
+        progressBar = findViewById(android.support.wasla.R.id.progressBar);
 
-        floatingActionButton = (FloatingActionButton) this.findViewById(android.wasla.support.R.id.fab_setting);
-        layoutFabFeedback = (LinearLayout) this.findViewById(android.wasla.support.R.id.layout_fab_feedback);
-        layoutFabShare = (LinearLayout) this.findViewById(android.wasla.support.R.id.layout_fab_share);
+        floatingActionButton = (FloatingActionButton) this.findViewById(android.support.wasla.R.id.fab_setting);
+        layoutFabFeedback = (LinearLayout) this.findViewById(android.support.wasla.R.id.layout_fab_feedback);
+        layoutFabShare = (LinearLayout) this.findViewById(android.support.wasla.R.id.layout_fab_share);
 
-        final Animation animation = AnimationUtils.loadAnimation(this, android.wasla.support.R.anim.simple_grow);
+        final Animation animation = AnimationUtils.loadAnimation(this, android.support.wasla.R.anim.simple_grow);
 
         setSupportActionBar(toolbar);
 
@@ -82,7 +82,7 @@ public class ContactsActivity extends AppCompatActivity {
 
         onlineDataBase = new OnlineDataBase(this);
         instructorsList=new ArrayList<>();
-        recyclerView = findViewById(android.wasla.support.R.id.rv_instructor);
+        recyclerView = findViewById(android.support.wasla.R.id.rv_instructor);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
 
         recyclerView.setOnScrollListener(new MyRecyclerScroll() {
@@ -151,7 +151,7 @@ public class ContactsActivity extends AppCompatActivity {
     private void closeSubMenusFab() {
         layoutFabShare.setVisibility(View.INVISIBLE);
         layoutFabFeedback.setVisibility(View.INVISIBLE);
-        floatingActionButton.setImageResource(android.wasla.support.R.drawable.ic_add_black_24dp);
+        floatingActionButton.setImageResource(android.support.wasla.R.drawable.ic_add_black_24dp);
         fabExpanded = false;
     }
 
@@ -160,7 +160,7 @@ public class ContactsActivity extends AppCompatActivity {
         layoutFabShare.setVisibility(View.VISIBLE);
         layoutFabFeedback.setVisibility(View.VISIBLE);
         //Change settings icon to 'X' icon
-        floatingActionButton.setImageResource(android.wasla.support.R.drawable.ic_close_black_24dp);
+        floatingActionButton.setImageResource(android.support.wasla.R.drawable.ic_close_black_24dp);
         fabExpanded = true;
     }
 
@@ -175,7 +175,7 @@ public class ContactsActivity extends AppCompatActivity {
         if (requestCode==AddFeedbackDialogRequestCoder)
         {
             if (resultCode == RESULT_OK) {
-                String feedback = data.getStringExtra(getString(android.wasla.support.R.string.feedback));
+                String feedback = data.getStringExtra(getString(android.support.wasla.R.string.feedback));
                 onlineDataBase.sendFeedback(feedback, new ValueCallback<Boolean>() {
                     @Override
                     public void onReceiveValue(Boolean aBoolean) {
@@ -195,8 +195,8 @@ public class ContactsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(android.wasla.support.R.menu.menu_main, menu);
-        MenuItem search = menu.findItem(android.wasla.support.R.id.action_search);
+        getMenuInflater().inflate(android.support.wasla.R.menu.menu_main, menu);
+        MenuItem search = menu.findItem(android.support.wasla.R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
        // searchView.setBackgroundColor(getResources().getColor(R.color.White));
         search(searchView);

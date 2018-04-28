@@ -1,4 +1,4 @@
-package android.wasla.support.adapter;
+package android.support.wasla.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,9 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.wasla.support.R;
-import android.wasla.support.model.Instructor;
-import android.wasla.support.model.OnlineDataBase;
+import android.support.wasla.R;
+import android.support.wasla.model.Instructor;
+import android.support.wasla.model.OnlineDataBase;
 
 import java.util.ArrayList;
 import java.util.List;

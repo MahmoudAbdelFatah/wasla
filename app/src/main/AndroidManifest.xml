@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="android.wasla.support">
+    package="android.support.wasla">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,10 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name="android.wasla.support.util.CheckOfflineFirebase">
+        android:name=".util.CheckOfflineFirebase">
 
         <activity
-            android:name="android.wasla.support.view.SplashActivity"
+            android:name=".view.SplashActivity"
             android:theme="@style/SplashTheme"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -26,11 +26,11 @@
         </activity>
 
         <activity
-            android:name="android.wasla.support.view.ContactsActivity"
+            android:name=".view.ContactsActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="android.wasla.support.view.AddFeedbackDialog"
+            android:name=".view.AddFeedbackDialog"
             android:label="Feedback..."
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar.MinWidth"
             android:screenOrientation="portrait" />

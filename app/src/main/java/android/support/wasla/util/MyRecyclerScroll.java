@@ -1,4 +1,4 @@
-package android.wasla.support.util;
+package android.support.wasla.util;
 
 import android.support.v7.widget.RecyclerView;
 

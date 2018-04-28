@@ -1,4 +1,4 @@
-package android.wasla.support;
+package android.support.wasla;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

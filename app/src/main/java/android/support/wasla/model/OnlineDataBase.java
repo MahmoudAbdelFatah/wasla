@@ -1,4 +1,4 @@
-package android.wasla.support.model;
+package android.support.wasla.model;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -40,7 +40,7 @@ public class OnlineDataBase {
     }
 
     public void updateAvailableContacts(final ValueCallback<List<Instructor>> valueCallback) {
-        databaseReference.child(context.getString(android.wasla.support.R.string.contacts_node)).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(context.getString(android.support.wasla.R.string.contacts_node)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Map<String,Instructor> instructors = new HashMap<String,Instructor>();
@@ -80,7 +80,7 @@ public class OnlineDataBase {
         if (!isNetworkConnected())
             Toasty.warning(context, "Not Added, Check the internet connection!", Toast.LENGTH_LONG, true).show();
         else {
-            databaseReference.child(context.getString(android.wasla.support.R.string.feedback_node)).push().setValue(feedback).addOnFailureListener(new OnFailureListener() {
+            databaseReference.child(context.getString(android.support.wasla.R.string.feedback_node)).push().setValue(feedback).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     b.onReceiveValue(false);

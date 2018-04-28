@@ -1,4 +1,4 @@
-package android.wasla.support.view;
+package android.support.wasla.view;
 
 import android.app.Activity;
 import android.content.Intent;
